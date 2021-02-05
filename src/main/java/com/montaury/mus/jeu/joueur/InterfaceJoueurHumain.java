@@ -22,8 +22,13 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
 
   @Override
   public boolean veutAllerMus() {
-    println("Souhaitez-vous aller mus ? (o/n)");
-    return scanner.next().equals("o");
+    String choix;
+    do {
+      println("Souhaitez-vous aller mus ? (o/n)");
+      choix = scanner.next();
+    }
+    while (!choix.equals("o") && !choix.equals("n"));
+    return choix.equals("o");
   }
 
   @Override
