@@ -39,16 +39,21 @@ public class InterfaceJoueurHumain implements InterfaceJoueur {
   @Override
   public Choix faireChoixParmi(List<TypeChoix> choixPossibles) {
     print("Faites un choix entre (en toutes lettres): ");
-    println(choixPossibles.stream().map(TypeChoix::nom).collect(Collectors.joining(" | ")));
-    String choix = scanner.next();
-    if (choix.equalsIgnoreCase("Paso")) return new Paso();
-    if (choix.equalsIgnoreCase("Imido")) return new Imido();
-    if (choix.equalsIgnoreCase("Hordago")) return new Hordago();
-    if (choix.equalsIgnoreCase("Idoki")) return new Idoki();
-    if (choix.equalsIgnoreCase("Tira")) return new Tira();
-    if (choix.equalsIgnoreCase("Gehiago")) return new Gehiago(1);
-    if (choix.equalsIgnoreCase("Kanta")) return new Kanta();
-    return new Paso();
+
+
+    //saisie vérif du choix
+    for (;;){
+      println(choixPossibles.stream().map(TypeChoix::nom).collect(Collectors.joining(" | ")));
+      String choix = scanner.next();
+      if (choix.equalsIgnoreCase("Paso")) return new Paso();
+      if (choix.equalsIgnoreCase("Imido")) return new Imido();
+      if (choix.equalsIgnoreCase("Hordago")) return new Hordago();
+      if (choix.equalsIgnoreCase("Idoki")) return new Idoki();
+      if (choix.equalsIgnoreCase("Tira")) return new Tira();
+      if (choix.equalsIgnoreCase("Gehiago")) return new Gehiago(1);
+      if (choix.equalsIgnoreCase("Kanta")) return new Kanta();
+      print("Faites un choix valide s'il vous plaît : ");
+    }
   }
 
   @Override
