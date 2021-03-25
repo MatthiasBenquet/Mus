@@ -29,7 +29,7 @@ public class Dialogue {
   }
 
   boolean enCours() {
-    return choix.size() <= 1 || (!dernierChoix().metFinAuDialogue() && !dernierChoix().est(PASO));
+    return choix.size() <= 3 || (!dernierChoix().metFinAuDialogue() && !dernierChoix().est(PASO));
   }
 
   private Choix dernierChoix() {

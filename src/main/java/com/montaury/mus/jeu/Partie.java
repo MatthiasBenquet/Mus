@@ -1,6 +1,7 @@
 package com.montaury.mus.jeu;
 
 import com.montaury.mus.jeu.joueur.AffichageEvenementsDeJeu;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.joueur.Opposants;
 import java.util.ArrayList;
@@ -17,9 +18,12 @@ public class Partie {
   }
 
   public Resultat jouer(Opposants opposants) {
+
     affichage.nouvellePartie();
+
+
     Partie.Score score = new Partie.Score(opposants);
-    Optional<Joueur> vainqueur;
+    Optional<Equipe> vainqueur;
     do {
       Manche.Resultat resultat = new Manche(affichage).jouer(opposants);
       vainqueur = score.enregistrer(resultat);
@@ -32,16 +36,16 @@ public class Partie {
     private static final int NB_MANCHES_A_GAGNER = 3;
 
     private final List<Manche.Resultat> resultatManches = new ArrayList<>();
-    private final Map<Joueur, Integer> manchesGagneesParJoueur = new HashMap<>();
+    private final Map<Equipe, Integer> manchesGagneesParEquipe = new HashMap<>();
 
     public Score(Opposants opposants) {
-      this.manchesGagneesParJoueur.put(opposants.joueurEsku(), 0);
-      this.manchesGagneesParJoueur.put(opposants.joueurZaku(), 0);
+      this.manchesGagneesParEquipe.put(opposants.equipeHumain(), 0);
+      this.manchesGagneesParEquipe.put(opposants.equipeOrdinateur(), 0);
     }
 
-    public Optional<Joueur> enregistrer(Manche.Resultat score) {
+    public Optional<Equipe> enregistrer(Manche.Resultat score) {
       resultatManches.add(score);
-      manchesGagneesParJoueur.put(score.vainqueur(), manchesGagneesParJoueur.get(score.vainqueur()) + 1);
+      manchesGagneesParEquipe.put(score.vainqueur(), manchesGagneesParEquipe.get(score.vainqueur()) + 1);
       return vainqueur();
     }
 
@@ -49,22 +53,22 @@ public class Partie {
       return resultatManches;
     }
 
-    public Optional<Joueur> vainqueur() {
-      return manchesGagneesParJoueur.keySet().stream()
-        .filter(joueur -> manchesGagneesParJoueur.get(joueur) == NB_MANCHES_A_GAGNER).findAny();
+    public Optional<Equipe> vainqueur() {
+      return manchesGagneesParEquipe.keySet().stream()
+        .filter(joueur -> manchesGagneesParEquipe.get(joueur) == NB_MANCHES_A_GAGNER).findAny();
     }
   }
 
   public static class Resultat {
-    private final Joueur vainqueur;
+    private final Equipe vainqueur;
     private final Score score;
 
-    private Resultat(Joueur vainqueur, Score score) {
+    private Resultat(Equipe vainqueur, Score score) {
       this.vainqueur = vainqueur;
       this.score = score;
     }
 
-    public Joueur vainqueur() {
+    public Equipe vainqueur() {
       return vainqueur;
     }
 

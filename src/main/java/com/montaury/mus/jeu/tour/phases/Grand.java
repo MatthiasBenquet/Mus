@@ -5,6 +5,8 @@ import com.montaury.mus.jeu.carte.ValeurCarte;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.joueur.Main;
 import com.montaury.mus.jeu.joueur.Opposants;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static com.montaury.mus.jeu.carte.ValeurCarte.Comparaison.PLUS_GRANDE;
@@ -18,19 +20,42 @@ public class Grand extends Phase {
   @Override
   protected Joueur meilleurParmi(Opposants opposants) {
     Joueur joueurEsku = opposants.joueurEsku();
+    Joueur joueurDeux = opposants.joueurDeux();
+    Joueur joueurTrois = opposants.joueurTrois();
     Joueur joueurZaku = opposants.joueurZaku();
+
     List<Carte> cartesJoueurEsku = joueurEsku.main().cartesDuPlusGrandAuPlusPetit();
+    List<Carte> cartesJoueurDeux = joueurDeux.main().cartesDuPlusGrandAuPlusPetit();
+    List<Carte> cartesJoueurTrois = joueurTrois.main().cartesDuPlusGrandAuPlusPetit();
     List<Carte> cartesJoueurZaku = joueurZaku.main().cartesDuPlusGrandAuPlusPetit();
+    List<Carte> meilleurMain = joueurEsku.main().cartesDuPlusGrandAuPlusPetit();
+
+    List<List<Carte>> tabCartesDesJoueurs = new ArrayList<List<Carte>>() {
+    };
+    tabCartesDesJoueurs.add(cartesJoueurDeux);
+    tabCartesDesJoueurs.add(cartesJoueurTrois);
+    tabCartesDesJoueurs.add(cartesJoueurZaku);
+
+    ValeurCarte.Comparaison compare;
 
     for (int i = 0; i < Main.TAILLE; i++) {
-      ValeurCarte.Comparaison compare = cartesJoueurEsku.get(i).comparerAvec(cartesJoueurZaku.get(i));
-      if (compare == PLUS_GRANDE) {
-        return joueurEsku;
+      for(int j =0 ; j < 3 ; j++ ){
+        compare = meilleurMain.get(i).comparerAvec(tabCartesDesJoueurs.get(j).get(i));
+
+        if(compare == PLUS_PETITE){
+          meilleurMain=tabCartesDesJoueurs.get(j);
+        }
       }
-      if (compare == PLUS_PETITE) {
-        return joueurZaku;
-      }
-    }
-    return joueurEsku;
+
+        }
+    if(meilleurMain==cartesJoueurEsku){ return joueurEsku ; }
+    else if(meilleurMain==cartesJoueurDeux){ return joueurDeux;}
+    else if(meilleurMain==cartesJoueurTrois){ return  joueurTrois;}
+    else if(meilleurMain==cartesJoueurZaku){ return joueurZaku;}
+
+return joueurEsku;
+
   }
 }
+
+

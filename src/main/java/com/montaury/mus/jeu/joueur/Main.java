@@ -34,13 +34,13 @@ public class Main {
     return cartesTriees;
   }
 
-  public Paires getPaires() {
-    List<Paires> paires = cartes.stream()
-      .collect(Collectors.groupingBy(Carte::valeurCarte))
-      .entrySet().stream().filter(groupe -> groupe.getValue().size() > 1)
-      .map(groupe -> creerPaires(groupe.getKey(), groupe.getValue().size()))
-      .collect(Collectors.toList());
-    return paires.size() > 1 ? new Doubles((Simple) paires.get(0), (Simple) paires.get(1)) : paires.get(0);
+  public Paires getPaires(){
+      List<Paires> paires = cartes.stream()
+              .collect(Collectors.groupingBy(Carte::valeurCarte))
+              .entrySet().stream().filter(groupe -> groupe.getValue().size() > 1)
+              .map(groupe -> creerPaires(groupe.getKey(), groupe.getValue().size()))
+              .collect(Collectors.toList());
+      return paires.size() > 1 ? new Doubles((Simple) paires.get(0), (Simple) paires.get(1)) : paires.get(0);
   }
 
   private Paires creerPaires(ValeurCarte valeurCarte, int nombreCartesDeMemeValeur) {

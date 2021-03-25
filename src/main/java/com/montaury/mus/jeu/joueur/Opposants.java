@@ -4,38 +4,50 @@ import java.util.Iterator;
 import java.util.List;
 
 public class Opposants {
-  private Joueur joueurEsku;
-  private Joueur joueurZaku;
+ private Equipe equipeHumain ;
+ private Equipe equipeOrdinateur;
+ private Joueur joueurEsku;
+ private Joueur joueurDeux;
+ private Joueur joueurTrois;
+ private Joueur joueurZaku;
 
-  public Opposants(Joueur joueurEsku, Joueur joueurZaku) {
-    this.joueurEsku = joueurEsku;
-    this.joueurZaku = joueurZaku;
+  public Opposants(Joueur joueurHumain,Joueur joueurOrdinateurEquipeOrdinateur, Joueur joueurOrdinateurEquipeHumain, Joueur joueurOrdinateur2EquipeOrdinateur) {
+    this.equipeHumain= new Equipe (joueurHumain,joueurOrdinateurEquipeHumain,"Humain");
+    this.equipeOrdinateur = new Equipe (joueurOrdinateurEquipeOrdinateur,joueurOrdinateur2EquipeOrdinateur,"Ordinateur");
+    this.joueurEsku = equipeHumain.joueurA();
+    this.joueurDeux = equipeOrdinateur.joueurA();
+    this.joueurTrois = equipeHumain.joueurB();
+    this.joueurZaku = equipeOrdinateur.joueurB();
   }
 
   public void tourner() {
     Joueur tmp = joueurEsku;
-    joueurEsku = joueurZaku;
+    joueurEsku = joueurDeux;
+    joueurDeux = joueurTrois ;
+    joueurTrois = joueurZaku ;
     joueurZaku = tmp;
   }
 
 
   //Getter
-  public Joueur joueurEsku() {
-    return joueurEsku;
-  }
+  public Joueur joueurEsku() {return joueurEsku;}
 
-  public Joueur joueurZaku() {
-    return joueurZaku;
-  }
+  public Joueur joueurDeux() {return joueurDeux; }
+
+  public Joueur joueurTrois() {return joueurTrois;}
+
+  public Joueur joueurZaku() {return joueurZaku;}
+
+  public Equipe equipeHumain() {return equipeHumain;}
+
+  public Equipe equipeOrdinateur() {return equipeOrdinateur;}
 
 
-  public Iterator<Joueur> itererDansLOrdre() {
-    return new IteratorInfini(this);
-  }
+  public Iterator<Joueur> itererDansLOrdre() {return new IteratorInfini(this);}
 
-  public List<Joueur> dansLOrdre() {
-    return List.of(joueurEsku, joueurZaku);
-  }
+  public List<Joueur> dansLOrdre() {return List.of(joueurEsku, joueurDeux, joueurTrois, joueurZaku);}
+
+  public List<Equipe> dansLOrdreEquipes() { return List.of(equipeHumain, equipeOrdinateur); }
 
   private static class IteratorInfini implements Iterator<Joueur> {
     private final Opposants opposants;
@@ -54,7 +66,16 @@ public class Opposants {
     @Override
     public Joueur next() {
       Joueur next = suivant;
-      suivant = suivant == opposants.joueurEsku ? opposants.joueurZaku : opposants.joueurEsku;
+      if (opposants.equipeHumain().joueurA().equals(suivant)) {
+        suivant = opposants.equipeOrdinateur().joueurA();
+      } else if (opposants.equipeOrdinateur().joueurA().equals(suivant)) {
+        suivant = opposants.equipeHumain().joueurB();
+      } else if (opposants.equipeHumain().joueurB().equals(suivant)) {
+        suivant = opposants.equipeOrdinateur().joueurB();
+      } else if (opposants.equipeOrdinateur().joueurB().equals(suivant)) {
+        suivant = opposants.equipeHumain().joueurA();
+      }
+
       return next;
     }
   }

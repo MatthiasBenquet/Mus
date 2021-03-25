@@ -23,7 +23,7 @@ public class DialogueTermine {
 
   private int calculerPointsEngages() {
     if (estConcluPar(TIRA)) {
-      return mises().size() == 2 ? 1 : cumulMisesJusquauChoix(choix.size() - 2);
+      return mises().size() == 4 ? 1 : cumulMisesJusquauChoix(choix.size() - 2);
     }
     if (estConcluPar(IDOKI)) {
       return cumulMisesJusquauChoix(choix.size() - 1);

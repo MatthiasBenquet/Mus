@@ -67,7 +67,7 @@ public class Tour {
       while (resultatPhase.hasNext() && score.vainqueur().isEmpty()) {
         Phase.Resultat resultat = resultatPhase.next();
         resultat.vainqueur().ifPresent(vainqueur ->
-          score.scorer(vainqueur, resultat.pointsEnSuspens + resultat.bonus));
+          score.scorer(vainqueur.equipe(), resultat.pointsEnSuspens + resultat.bonus));
       }
     }
   }

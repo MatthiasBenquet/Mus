@@ -2,6 +2,7 @@ package com.montaury.mus.jeu.tour.phases;
 
 import com.montaury.mus.jeu.Manche;
 import com.montaury.mus.jeu.joueur.AffichageEvenementsDeJeu;
+import com.montaury.mus.jeu.joueur.Equipe;
 import com.montaury.mus.jeu.joueur.Joueur;
 import com.montaury.mus.jeu.joueur.Opposants;
 import com.montaury.mus.jeu.tour.phases.dialogue.Dialogue;
@@ -31,7 +32,7 @@ public abstract class Phase {
     if (joueurs.isEmpty()) {
       return Resultat.nonJouable();
     }
-    if (joueurs.size() == 1) {
+    if (joueurs.size() == 1 || (joueurs.size() == 2 && joueurs.get(0).equipe() == joueurs.get(1).equipe())) {
       return Resultat.termine(joueurs.get(0), pointsBonus(joueurs.get(0)));
     }
     DialogueTermine dialogue = new Dialogue().derouler(affichage, opposants);
@@ -40,13 +41,13 @@ public abstract class Phase {
 
   private Resultat conclure(DialogueTermine dialogue, Manche.Score score, Opposants opposants) {
     if (dialogue.estConcluPar(TIRA)) {
-      Joueur joueurEmportantLaMise = dialogue.avantDernierJoueur();
-      score.scorer(joueurEmportantLaMise, dialogue.pointsEngages());
+     Joueur joueurEmportantLaMise = dialogue.avantDernierJoueur();
+      score.scorer(joueurEmportantLaMise.equipe(), dialogue.pointsEngages());
       return Resultat.termine(joueurEmportantLaMise, pointsBonus(joueurEmportantLaMise));
     }
     if (dialogue.estConcluPar(KANTA)) {
       Joueur vainqueur = meilleurParmi(opposants);
-      score.remporterManche(vainqueur);
+      score.remporterManche(vainqueur.equipe());
       return Resultat.termine(vainqueur, 0);
     }
     Joueur vainqueurPhase = meilleurParmi(opposants);
@@ -64,9 +65,7 @@ public abstract class Phase {
     return peutParticiper(opposants.joueurEsku()) && peutParticiper(opposants.joueurZaku());
   }
 
-  protected boolean peutParticiper(Joueur joueur) {
-    return true;
-  }
+  protected boolean peutParticiper(Joueur joueur) { return true; }
 
   protected abstract Joueur meilleurParmi(Opposants opposants);
 

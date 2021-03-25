@@ -13,6 +13,7 @@ public class Doubles extends Paires {
 
   @Override
   public boolean estMeilleureOuEgaleA(Paires paires) {
+    if (meilleurePaire == null || moinsBonnePaire == null) {return false;}
     if (!(paires instanceof Doubles)) {
       return true;
     }

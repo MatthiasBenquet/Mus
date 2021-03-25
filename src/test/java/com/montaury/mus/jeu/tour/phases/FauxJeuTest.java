@@ -14,6 +14,8 @@ class FauxJeuTest {
   void ne_doit_pas_se_derouler_si_un_seul_des_joueurs_a_le_jeu() {
     Opposants opposants = new Opposants(
       unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+      unJoueurAvec(main(Carte.AS_COUPE, Carte.QUATRE_COUPE, Carte.VALET_COUPE, Carte.SIX_PIECE)),
+      unJoueurAvec(main(Carte.DEUX_BATON, Carte.QUATRE_BATON, Carte.TROIS_BATON, Carte.SIX_COUPE)),
       unJoueurAvec(main(Carte.VALET_PIECE, Carte.CAVALIER_PIECE, Carte.ROI_BATON, Carte.AS_PIECE))
     );
 
@@ -26,6 +28,8 @@ class FauxJeuTest {
   void doit_se_derouler_si_personne_n_a_le_jeu() {
     Opposants opposants = new Opposants(
       unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+      unJoueurAvec(main(Carte.AS_COUPE, Carte.QUATRE_COUPE, Carte.VALET_COUPE, Carte.SIX_PIECE)),
+      unJoueurAvec(main(Carte.DEUX_BATON, Carte.CINQ_BATON, Carte.TROIS_BATON, Carte.SIX_COUPE)),
       unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE))
     );
 
@@ -39,6 +43,8 @@ class FauxJeuTest {
     Joueur joueurZaku = unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.ROI_COUPE));
     Opposants opposants = new Opposants(
       unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE)),
+      unJoueurAvec(main(Carte.AS_COUPE, Carte.QUATRE_COUPE, Carte.VALET_COUPE, Carte.SIX_PIECE)),
+      unJoueurAvec(main(Carte.DEUX_BATON, Carte.CINQ_BATON, Carte.TROIS_BATON, Carte.SIX_COUPE)),
       joueurZaku
     );
 
@@ -52,6 +58,8 @@ class FauxJeuTest {
     Joueur joueurEsku = unJoueurAvec(main(Carte.AS_BATON, Carte.QUATRE_PIECE, Carte.VALET_BATON, Carte.SIX_COUPE));
     Opposants opposants = new Opposants(
       joueurEsku,
+      unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE)),
+      unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE)),
       unJoueurAvec(main(Carte.VALET_PIECE, Carte.SIX_PIECE, Carte.QUATRE_BATON, Carte.AS_PIECE))
     );
 
